@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: auth-service
+
+jwt:
+  secret: ${JWT_Secret-Key}
+  expiration: ${JWT_Refresh-Token-Expiration-time}

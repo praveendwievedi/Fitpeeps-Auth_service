@@ -4,4 +4,5 @@ spring:
 
 jwt:
   secret: ${JWT_Secret-Key}
-  expiration: ${JWT_Refresh-Token-Expiration-time}
+  refresh-token-expiration: ${JWT_Refresh-token-expiration}
+  acess-token-expiration: ${JWT_Access-token-expiration}

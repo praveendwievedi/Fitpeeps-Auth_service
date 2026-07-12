@@ -23,19 +23,24 @@ public class JwtService {
     private  String jwtSecret;
     @Value("${jwt.refresh-token-expiration}")
     private long refreshTokenExpiration;
+    @Value("${jwt.acess-token-expiration}")
+    private long accessTokenExpiration;
 
-    public String buildTokens(UserDetails userDetails){
-        return createTokenWithUserDetails(new HashMap<>(),userDetails);
+    public String buildTokens(UserDetails userDetails,int val){
+        return createTokenWithUserDetails(new HashMap<>(),userDetails,val);
     }
 
     private String createTokenWithUserDetails(
             Map<String , Object> extraRolesAndClaims,
-            UserDetails userDetails) {
+            UserDetails userDetails,
+            int val
+            ) {
+        long expiration= (val > 0 ? refreshTokenExpiration : accessTokenExpiration);
         return Jwts.builder()
                 .claims(extraRolesAndClaims)
                 .subject(userDetails.getUsername())
                 .issuedAt(new Date())
-                .expiration(new Date(System.currentTimeMillis() + refreshTokenExpiration))
+                .expiration(new Date(System.currentTimeMillis() + expiration))
                 .signWith(getSigningKey())
                 .compact();
     }
